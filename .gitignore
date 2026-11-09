@@ -1,0 +1,12 @@
+# 构建产物
+build/
+*.o
+*.d
+*.elf
+*.hex
+*.bin
+*.map
+
+# 临时文件
+*.bak
+*.tmp
