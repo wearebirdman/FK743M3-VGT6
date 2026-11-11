@@ -216,6 +216,16 @@ void Uart_Printf(const char *fmt, ...)
     osMutexRelease(s_UartTxMutexHandle);
 }
 
+/* 阻塞等待一条规范化消息（无结束符、'\0' 结尾）
+ * len: 输出有效字符串长度（不含 '\0'）
+ * 返回: 消息缓冲指针；调用方应尽快拷走（缓冲会被下一帧覆盖） */
+uint8_t *Uart_RxWaitFrame(uint16_t *len)
+{
+  osSemaphoreAcquire(s_UartRxSemHandle, osWaitForever);
+  *len = s_RxLen;
+  return s_RxBuf;
+}
+
 /* DMA 空闲不定长接收回调（ISR）：整帧规范化为标准字符串后通知接收任务
  * 规范化 = 剥离尾部 \r/\n 结束符 + 补 '\0' + 记录有效长度，随后立即重挂 DMA
  * 调试口低吞吐场景；若任务未及时消费，下一帧会覆盖本缓冲 */
@@ -241,16 +251,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t size)
     if (len > 0U) /* 纯结束符/空帧不通知 */
       osSemaphoreRelease(s_UartRxSemHandle);
   }
-}
-
-/* 阻塞等待一条规范化消息（无结束符、'\0' 结尾）
- * len: 输出有效字符串长度（不含 '\0'）
- * 返回: 消息缓冲指针；调用方应尽快拷走（缓冲会被下一帧覆盖） */
-uint8_t *Uart_RxWaitFrame(uint16_t *len)
-{
-  osSemaphoreAcquire(s_UartRxSemHandle, osWaitForever);
-  *len = s_RxLen;
-  return s_RxBuf;
 }
 /* USER CODE END 1 */
 
