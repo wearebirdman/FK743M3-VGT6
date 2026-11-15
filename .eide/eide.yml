@@ -42,6 +42,9 @@ targets:
         - BSP/qspi
         - APP/led
         - APP/uart
+        - BSP/camera
+        - APP/camera
+        - BSP/lcd
       libList: []
     excludeList: []
     settings:

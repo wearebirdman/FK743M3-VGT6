@@ -25,12 +25,13 @@
 #include "i2c.h"
 #include "quadspi.h"
 #include "rtc.h"
+#include "spi.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "camera_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,8 +114,9 @@ int main(void)
   MX_QUADSPI_Init();
   MX_DCMI_Init();
   MX_I2C1_Init();
+  MX_SPI4_Init();
   /* USER CODE BEGIN 2 */
-
+  Camera_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */
