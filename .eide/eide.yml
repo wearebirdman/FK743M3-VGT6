@@ -45,6 +45,7 @@ targets:
         - BSP/camera
         - APP/camera
         - BSP/lcd
+        - APP/vision
       libList: []
     excludeList: []
     settings:

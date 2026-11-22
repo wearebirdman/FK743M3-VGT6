@@ -32,6 +32,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "camera_task.h"
+#include "vision_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,6 +118,7 @@ int main(void)
   MX_SPI4_Init();
   /* USER CODE BEGIN 2 */
   Camera_Init();
+  Vision_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */
